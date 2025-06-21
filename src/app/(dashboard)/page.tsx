@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { SubdomainForm } from './subdomain-form';
+import { SubdomainForm } from './SubdomainForm';
 import { rootDomain } from '@/lib/utils';
 
 export default async function HomePage() {
