@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { rootDomain } from "@/lib/utils";
 import { getAllTenants } from "@/lib/redis";
-import { AdminDashboard } from "./Dashboard";
+import { AdminDashboard } from "./AdminDashboard";
 
 export const metadata: Metadata = {
   title: `Admin Dashboard | ${rootDomain}`,
