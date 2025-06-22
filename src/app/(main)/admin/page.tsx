@@ -1,12 +1,5 @@
-import type { Metadata } from "next";
-import { rootDomain } from "@/lib/utils";
 import { getAllTenants } from "@/lib/redis";
 import { AdminDashboard } from "./AdminDashboard";
-
-export const metadata: Metadata = {
-  title: `Admin Dashboard | ${rootDomain}`,
-  description: `Manage subdomains for ${rootDomain}`,
-};
 
 export default async function AdminPage() {
   const tenants = await getAllTenants();
