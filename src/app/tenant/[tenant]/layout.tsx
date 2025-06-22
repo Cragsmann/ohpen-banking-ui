@@ -10,7 +10,7 @@ export default async function TenantLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { tenant: string };
+  params: Promise<{ tenant: string }>;
 }) {
   const { tenant } = await params;
   const tenantConfig = await getTenantConfig(tenant);

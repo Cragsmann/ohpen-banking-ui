@@ -9,7 +9,7 @@ export default async function LabelLayout({
   params,
 }: {
   children: ReactNode;
-  params: { tenant: string; label: string };
+  params: Promise<{ tenant: string; label: string }>;
 }) {
   const { tenant, label } = await params;
 
