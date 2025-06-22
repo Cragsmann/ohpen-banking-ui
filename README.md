@@ -1,8 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Multi-Tenant Next.js Application
+
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app), enhanced to support multi-tenant routing using middleware.
+
+---
+
+## Features
+
+- **Multi-Tenant Architecture:** Tenants are identified via subdomains.
+- **Tenant + Label Support:** Supports URLs structured as `tenant.label.example.com` to allow tenant and branch/label separation.
+- **Middleware-based Routing:** Incoming requests are intercepted by Next.js middleware which rewrites routes dynamically based on the tenant and label subdomains.
+- **Mocked Authentication:** Simple mocked login and logout flows with protected routes.
+- **Custom Tenant Configuration:** Load tenant-specific settings from Redis or other storage.
+- **Flexible Environment Handling:** Works both in local development (`localhost`) and production environments.
+
+---
+
+## Project Structure Highlights
+
+- **`middleware.ts`**  
+  Detects tenant and optional label from the subdomain and rewrites requests to tenant-aware routes, e.g.  
+  `https://tenant.label.example.com/path` → `/tenant/tenant/label/path`
+
+- **Tenant Pages**  
+  Under `/app/tenant/[tenant]/[label]/` and `/app/tenant/[tenant]/` for tenant-specific UI.
+
+- **AuthProvider**  
+  A React context provider for handling mocked user authentication and route protection.
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Installation
+
+```bash
+npm install
+# or
+yarn
+# or
+pnpm install
+```
+
+### Run Dev server
 
 ```bash
 npm run dev
@@ -10,27 +49,8 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Open browser on
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+http://localhost:3000
