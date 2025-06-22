@@ -17,8 +17,6 @@ const AVAILABLE_RULES = [
 
 export function CreateTenantForm() {
   const [subdomain, setSubdomain] = useState("");
-  const [primaryColor, setPrimaryColor] = useState("#000000");
-  const [secondaryColor, setSecondaryColor] = useState("#ffffff");
   const [accessRules, setAccessRules] = useState<string[]>([]);
   const [labels, setLabels] = useState<string[]>([]);
   const [newLabel, setNewLabel] = useState("");
@@ -54,34 +52,6 @@ export function CreateTenantForm() {
             required
           />
           <span className="px-3 flex items-center">.{rootDomain}</span>
-        </div>
-      </div>
-
-      {/* Colors */}
-      <div className="flex space-x-4">
-        <div className="space-y-1">
-          <Label htmlFor="primaryColor">Primary Color</Label>
-          <Input
-            id="primaryColor"
-            name="primaryColor"
-            type="text"
-            value={primaryColor}
-            onChange={(e) => setPrimaryColor(e.target.value)}
-            required
-            className="w-24 h-8 border rounded cursor-pointer"
-          />
-        </div>
-        <div className="space-y-1">
-          <Label htmlFor="secondaryColor">Secondary Color</Label>
-          <Input
-            id="secondaryColor"
-            name="secondaryColor"
-            type="text"
-            value={secondaryColor}
-            onChange={(e) => setSecondaryColor(e.target.value)}
-            required
-            className="w-24 h-8 border rounded cursor-pointer"
-          />
         </div>
       </div>
 

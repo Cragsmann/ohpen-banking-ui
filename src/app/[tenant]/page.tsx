@@ -7,7 +7,7 @@ export default function DashboardPage() {
   return (
     <div className="p-6 space-y-4">
       <h1 className="text-3xl font-semibold text-primary">
-        Main Page Tenant without label: {tenant.subdomain}
+        Main Tenant Page without label provided: {tenant.subdomain}
       </h1>
 
       <div>

@@ -6,9 +6,7 @@ export default function DashboardPage() {
 
   return (
     <div>
-      <h1 style={{ color: tenant.theme.primaryColor }}>
-        {tenant.subdomain} Dashboard
-      </h1>
+      <h1>{tenant.subdomain} Dashboard</h1>
       <p>
         Viewing data for Label: <strong>{label?.name}</strong>
       </p>
