@@ -13,11 +13,8 @@ export async function createTenantAction(formData: FormData) {
   const accessRules =
     formData.get("accessRules")?.toString().split(",").filter(Boolean) || [];
 
-  if (!subdomain) throw new Error("Subdomain is required");
-  if (!/^[a-z0-9-]+$/.test(subdomain))
-    throw new Error("Subdomain must be lowercase letters, numbers, or hyphens");
-
   const key = `tenant:${subdomain}`;
+
   if (await redis.exists(key))
     throw new Error(`Tenant "${subdomain}" already exists`);
 

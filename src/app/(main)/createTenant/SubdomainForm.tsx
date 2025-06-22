@@ -21,24 +21,80 @@ export function CreateTenantForm() {
   const [labels, setLabels] = useState<string[]>([]);
   const [newLabel, setNewLabel] = useState("");
 
+  const [errors, setErrors] = useState<{
+    subdomain?: string;
+    accessRules?: string;
+    labels?: string;
+  }>({});
+
   const addLabel = () => {
     const trimmed = newLabel.trim();
     if (trimmed && !labels.includes(trimmed)) {
       setLabels((prev) => [...prev, trimmed]);
       setNewLabel("");
+      setErrors((prev) => ({ ...prev, labels: undefined }));
     }
   };
 
-  const removeLabel = (label: string) =>
+  const removeLabel = (label: string) => {
     setLabels((prev) => prev.filter((l) => l !== label));
+  };
 
-  const toggleRule = (id: string) =>
-    setAccessRules((prev) =>
-      prev.includes(id) ? prev.filter((r) => r !== id) : [...prev, id]
-    );
+  const toggleRule = (id: string) => {
+    setAccessRules((prev) => {
+      const updatedRules = prev.includes(id)
+        ? prev.filter((r) => r !== id)
+        : [...prev, id];
+      setErrors((prev) => ({ ...prev, accessRules: undefined }));
+      return updatedRules;
+    });
+  };
+
+  const validateForm = () => {
+    const newErrors: typeof errors = {};
+    const trimmedSubdomain = subdomain.trim();
+
+    if (!trimmedSubdomain) {
+      newErrors.subdomain = "Tenant name (subdomain) is required.";
+    } else if (!/^[a-z0-9-]+$/.test(trimmedSubdomain)) {
+      newErrors.subdomain =
+        "Subdomain must be lowercase letters, numbers, or hyphens.";
+    }
+
+    if (accessRules.length === 0) {
+      newErrors.accessRules = "At least one access rule must be selected.";
+    }
+
+    if (labels.length === 0) {
+      newErrors.labels = "At least one label must be defined.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (validateForm()) {
+      const formData = new FormData();
+      formData.append("subdomain", subdomain);
+      formData.append("accessRules", accessRules.join(","));
+      formData.append("labels", labels.join(","));
+
+      await createTenantAction(formData);
+      alert("Tenant created successfully!");
+      setSubdomain("");
+      setAccessRules([]);
+      setLabels([]);
+      setNewLabel("");
+    } else {
+      console.log("Form validation failed.", errors);
+    }
+  };
 
   return (
-    <form action={createTenantAction} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6">
       {/* Subdomain */}
       <div className="space-y-2">
         <Label htmlFor="subdomain">Subdomain</Label>
@@ -48,13 +104,18 @@ export function CreateTenantForm() {
             name="subdomain"
             placeholder="your-tenant"
             value={subdomain}
-            onChange={(e) => setSubdomain(e.target.value)}
-            required
+            onChange={(e) => {
+              setSubdomain(e.target.value);
+              setErrors((prev) => ({ ...prev, subdomain: undefined }));
+            }}
+            className={errors.subdomain ? "border-red-500" : ""}
           />
           <span className="px-3 flex items-center">.{rootDomain}</span>
         </div>
+        {errors.subdomain && (
+          <p className="text-red-500 text-sm">{errors.subdomain}</p>
+        )}
       </div>
-
       {/* Access Rules */}
       <div className="space-y-1">
         <Label>Access Rules</Label>
@@ -69,8 +130,10 @@ export function CreateTenantForm() {
             </label>
           ))}
         </div>
+        {errors.accessRules && (
+          <p className="text-red-500 text-sm">{errors.accessRules}</p>
+        )}
       </div>
-
       {/* Labels */}
       <div className="space-y-2">
         <Label>Labels (Branches)</Label>
@@ -101,12 +164,13 @@ export function CreateTenantForm() {
             ))}
           </div>
         )}
+        {errors.labels && (
+          <p className="text-red-500 text-sm">{errors.labels}</p>
+        )}
       </div>
 
-      {/* Hidden Inputs */}
       <input type="hidden" name="accessRules" value={accessRules.join(",")} />
-      <input type="hidden" name="labels" value={labels} />
-
+      <input type="hidden" name="labels" value={labels.join(",")} />
       <Button type="submit">Create Tenant</Button>
     </form>
   );
