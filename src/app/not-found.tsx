@@ -1,53 +1,42 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
-import { rootDomain, protocol } from '@/lib/utils';
+import Link from "next/link";
+import { useParams, usePathname } from "next/navigation";
+import { rootDomain } from "@/lib/utils";
 
-export default function NotFound() {
-  const [subdomain, setSubdomain] = useState<string | null>(null);
-  const pathname = usePathname();
-
-  useEffect(() => {
-    // Extract subdomain from URL if we're on a subdomain page
-    if (pathname?.startsWith('/subdomain/')) {
-      const extractedSubdomain = pathname.split('/')[2];
-      if (extractedSubdomain) {
-        setSubdomain(extractedSubdomain);
-      }
-    } else {
-      // Try to extract from hostname for direct subdomain access
-      const hostname = window.location.hostname;
-      if (hostname.includes(`.${rootDomain.split(':')[0]}`)) {
-        const extractedSubdomain = hostname.split('.')[0];
-        setSubdomain(extractedSubdomain);
-      }
-    }
-  }, [pathname]);
+export default function GlobalNotFound() {
+  const params = useParams(); // Might be { tenant, label, ... }
+  const pathname = usePathname(); // e.g. '/settings2'
+  const tenant = params.tenant || null;
+  const label = params.label || null;
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-blue-50 to-white p-4">
       <div className="text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-          {subdomain ? (
-            <>
-              <span className="text-blue-600">{subdomain}</span>.{rootDomain}{' '}
-              doesn't exist
-            </>
-          ) : (
-            'Subdomain Not Found'
-          )}
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          {tenant && label
+            ? `Page "${pathname}" not found for ${label}.${tenant}.${rootDomain}`
+            : `Page "${pathname}" not found`}
         </h1>
-        <p className="mt-3 text-lg text-gray-600">
-          This subdomain hasn't been created yet.
+        <p className="text-lg text-gray-600 mb-6">
+          {tenant && label
+            ? `The route you tried doesn’t exist in the ${label} view of ${tenant}.`
+            : `We couldn’t find that page.`}
         </p>
-        <div className="mt-6">
+        <div className="space-x-3">
+          {tenant && label ? (
+            <Link
+              href={`/${tenant}/${label}`}
+              className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+            >
+              Go to {label} Dashboard
+            </Link>
+          ) : null}
           <Link
-            href={`${protocol}://${rootDomain}`}
-            className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+            href="/"
+            className="rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-300"
           >
-            {subdomain ? `Create ${subdomain}` : `Go to ${rootDomain}`}
+            Go Home
           </Link>
         </div>
       </div>
