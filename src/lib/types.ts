@@ -11,3 +11,5 @@ export type LabelConfig = {
   name: string;
   description?: string;
 };
+
+export type User = { name: string } | null;

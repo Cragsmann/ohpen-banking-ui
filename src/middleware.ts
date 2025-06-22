@@ -55,26 +55,16 @@ export function middleware(request: NextRequest) {
 
   const [tenant, label] = parts;
 
-  if (pathname === "/admin" || pathname === "/settings") {
-    if (label) {
-      return NextResponse.rewrite(
-        new URL(`/${tenant}/${label}${pathname}`, request.url)
-      );
-    } else {
-      return NextResponse.rewrite(
-        new URL(`/${tenant}${pathname}`, request.url)
-      );
-    }
-  }
-
   if (parts.length === 2) {
     return NextResponse.rewrite(
-      new URL(`/${tenant}/${label}${pathname}`, request.url)
+      new URL(`/tenant/${tenant}/${label}${pathname}`, request.url)
     );
   }
 
   if (parts.length === 1) {
-    return NextResponse.rewrite(new URL(`/${tenant}${pathname}`, request.url));
+    return NextResponse.rewrite(
+      new URL(`/tenant/${tenant}${pathname}`, request.url)
+    );
   }
 
   return NextResponse.next();
@@ -90,6 +80,6 @@ export const config = {
      * 4. Files with extensions (e.g., .js, .css, .png, etc.)
      * This `matcher` config is good and should work with the middleware logic.
      */
-    "/((?!api|_next|admin|login|[\\w-]+\\.\\w+).*)",
+    "/((?!api|_next|[\\w-]+\\.\\w+).*)",
   ],
 };

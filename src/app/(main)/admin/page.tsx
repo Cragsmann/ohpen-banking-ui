@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { AdminDashboard } from "./dashboard";
 import { rootDomain } from "@/lib/utils";
 import { getAllTenants } from "@/lib/redis";
+import { AdminDashboard } from "./Dashboard";
 
 export const metadata: Metadata = {
   title: `Admin Dashboard | ${rootDomain}`,
@@ -9,7 +9,6 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminPage() {
-  // TODO: You can add authentication here with your preferred auth provider
   const tenants = await getAllTenants();
 
   return (

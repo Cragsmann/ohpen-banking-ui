@@ -87,22 +87,17 @@ export function CreateTenantForm() {
         {labels.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-2">
             {labels.map((label) => (
-              <div
+              <Button
+                variant="default"
+                size="sm"
+                type="button"
+                onClick={() => removeLabel(label)}
+                aria-label={`Remove label ${label}`}
+                className=" p-2"
                 key={label}
-                className="flex items-center bg-gray-200 text-black rounded-md px-3 py-1 text-sm"
               >
-                <span>{label}</span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  type="button"
-                  onClick={() => removeLabel(label)}
-                  aria-label={`Remove label ${label}`}
-                  className="ml-2 text-red-600 hover:text-red-800 p-0"
-                >
-                  ✕
-                </Button>
-              </div>
+                <span>{label}</span>✕
+              </Button>
             ))}
           </div>
         )}

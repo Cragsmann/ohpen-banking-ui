@@ -2,7 +2,7 @@ import { getTenantConfig } from "@/lib/redis";
 import { generateTenantSubdomainHref, protocol, rootDomain } from "@/lib/utils";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { TenantProvider } from "../providers/TenantProvider";
+import { TenantProvider } from "../../providers/TenantProvider";
 import { LabelDropdown } from "./LabelSelect";
 
 export default async function TenantLayout({

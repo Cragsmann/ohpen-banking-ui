@@ -2,11 +2,14 @@ import Link from "next/link";
 import { rootDomain } from "@/lib/utils";
 import { CreateTenantForm } from "./SubdomainForm";
 
-export default async function HomePage() {
+export default async function CreateTenant() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4 relative">
       <div className="absolute top-4 right-4">
-        <Link href="/admin" className="text-sm  transition-colors">
+        <Link
+          href="/admin"
+          className="p-2 text-sm text-muted-foreground hover:text-foreground"
+        >
           Admin
         </Link>
       </div>

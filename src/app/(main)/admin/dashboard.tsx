@@ -13,7 +13,7 @@ function DashboardHeader() {
     <div className="flex justify-between items-center mb-8">
       <h1 className="text-3xl font-bold">Admin panel for Tenant Management</h1>
       <div className="flex items-center gap-4">
-        <Link href="/">
+        <Link href="/createTenant">
           <Button
             variant="outline"
             size="sm"

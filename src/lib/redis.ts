@@ -6,14 +6,15 @@ export const redis = new Redis({
   token: process.env.KV_REST_API_TOKEN!,
 });
 
-export async function getTenantConfig(tenant: string): Promise<TenantConfig> {
+export async function getTenantConfig(
+  tenant: string
+): Promise<TenantConfig | null> {
   const sanitizedTenant = tenant.toLowerCase().replace(/[^a-z0-9-]/g, "");
   const data = await redis.hgetall<Record<string, string>>(
     `tenant:${sanitizedTenant}`
   );
 
-  if (!data || Object.keys(data).length === 0)
-    throw new Error(`Tenant "${sanitizedTenant}" not found`);
+  if (!data || Object.keys(data).length === 0) return null;
 
   return {
     id: Number(data.id || 0),

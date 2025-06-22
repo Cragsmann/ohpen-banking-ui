@@ -18,7 +18,7 @@ export default async function LabelLayout({
   }
 
   const tenantConfig = await getTenantConfig(tenant);
-  const labelConfig = tenantConfig.labels?.find(
+  const labelConfig = tenantConfig?.labels?.find(
     (l) => l.name.toLowerCase() === label?.toLowerCase()
   );
 
