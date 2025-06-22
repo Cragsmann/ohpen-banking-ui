@@ -2,16 +2,12 @@
 import { useTenant } from "@/app/providers/TenantProvider";
 
 export default function DashboardPage() {
-  const { tenant, label } = useTenant();
-
+  const { tenant } = useTenant();
   return (
     <div>
       <h1 style={{ color: tenant.theme.primaryColor }}>
-        {tenant.subdomain} Dashboard
+        {tenant.subdomain} Tanant home page
       </h1>
-      <p>
-        Viewing data for Label: <strong>{label?.name}</strong>
-      </p>
     </div>
   );
 }

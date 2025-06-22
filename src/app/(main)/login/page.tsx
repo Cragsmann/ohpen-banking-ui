@@ -12,6 +12,7 @@ export default function DashboardPage() {
       <p>
         Viewing data for Label: <strong>{label?.name}</strong>
       </p>
+      {/* Your interactive dashboard components go here */}
     </div>
   );
 }

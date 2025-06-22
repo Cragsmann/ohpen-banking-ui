@@ -1,6 +1,7 @@
 "use server";
 
 import { redis } from "@/lib/redis";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function createTenantAction(formData: FormData) {
@@ -31,4 +32,15 @@ export async function createTenantAction(formData: FormData) {
   });
 
   redirect(`/admin`);
+}
+
+export async function deleteSubdomainAction(formData: FormData): Promise<void> {
+  const subdomain = formData.get("subdomain")?.toString();
+
+  if (!subdomain) {
+    throw new Error("Subdomain is required");
+  }
+
+  await redis.del(`tenant:${subdomain}`);
+  revalidatePath("/admin");
 }

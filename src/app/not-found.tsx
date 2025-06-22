@@ -5,8 +5,8 @@ import { useParams, usePathname } from "next/navigation";
 import { rootDomain } from "@/lib/utils";
 
 export default function GlobalNotFound() {
-  const params = useParams(); // Might be { tenant, label, ... }
-  const pathname = usePathname(); // e.g. '/settings2'
+  const params = useParams();
+  const pathname = usePathname();
   const tenant = params.tenant || null;
   const label = params.label || null;
 
@@ -15,7 +15,7 @@ export default function GlobalNotFound() {
       <div className="text-center">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
           {tenant && label
-            ? `Page "${pathname}" not found for ${label}.${tenant}.${rootDomain}`
+            ? `Page "${pathname}" not found for ${tenant}.${label}.${rootDomain}`
             : `Page "${pathname}" not found`}
         </h1>
         <p className="text-lg text-gray-600 mb-6">
