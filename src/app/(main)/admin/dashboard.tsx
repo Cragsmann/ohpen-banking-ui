@@ -5,19 +5,23 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { deleteSubdomainAction } from "@/lib/actions";
 import { TenantConfig } from "@/lib/types";
 import { generateLabelSubdomainHref } from "@/lib/utils";
-import { Trash2 } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 
 function DashboardHeader() {
   return (
     <div className="flex justify-between items-center mb-8">
-      <h1 className="text-3xl font-bold">Tenant Management</h1>
+      <h1 className="text-3xl font-bold">Admin panel for Tenant Management</h1>
       <div className="flex items-center gap-4">
-        <Link
-          href="/"
-          className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-        >
-          Home
+        <Link href="/">
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            <Plus className="h-4 w-4" />
+            Add tenant
+          </Button>
         </Link>
       </div>
     </div>

@@ -18,10 +18,6 @@ export async function getTenantConfig(tenant: string): Promise<TenantConfig> {
   return {
     id: Number(data.id || 0),
     subdomain: sanitizedTenant,
-    theme: {
-      primaryColor: data.primaryColor || "#000000",
-      secondaryColor: data.secondaryColor || "#ffffff",
-    },
     accessRules: data.accessRules ? data.accessRules.split(",") : [],
     labels: parseLabelsFromString(data.labels) || [],
     createdAt: data.createdAt || "",
@@ -42,10 +38,6 @@ export async function getAllTenants(): Promise<TenantConfig[]> {
       return {
         id: Number(data.id || 0),
         subdomain: key.replace("tenant:", ""),
-        theme: {
-          primaryColor: data.primaryColor || "#000000",
-          secondaryColor: data.secondaryColor || "#ffffff",
-        },
         accessRules: data.accessRules ? data.accessRules.split(",") : [],
         labels: parseLabelsFromString(data.labels) || [],
         createdAt: data.createdAt || "",
@@ -65,7 +57,7 @@ function parseLabelsFromString(
     .split(",")
     .filter(Boolean)
     .map((name, index) => ({
-      id: index + 1, // Or a more robust ID generation
+      id: index + 1,
       name: name.trim(),
     }));
 }

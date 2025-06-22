@@ -13,7 +13,7 @@ export default async function AdminPage() {
   const tenants = await getAllTenants();
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+    <div className="min-h-screen p-4 md:p-8">
       <AdminDashboard tenants={tenants} />
     </div>
   );

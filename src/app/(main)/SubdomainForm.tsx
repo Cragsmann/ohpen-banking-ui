@@ -53,9 +53,7 @@ export function CreateTenantForm() {
             onChange={(e) => setSubdomain(e.target.value)}
             required
           />
-          <span className="bg-gray-100 px-3 flex items-center">
-            .{rootDomain}
-          </span>
+          <span className="px-3 flex items-center">.{rootDomain}</span>
         </div>
       </div>
 
@@ -121,7 +119,7 @@ export function CreateTenantForm() {
             {labels.map((label) => (
               <div
                 key={label}
-                className="flex items-center bg-gray-100 text-gray-900 rounded-md px-3 py-1 text-sm"
+                className="flex items-center bg-gray-200 text-black rounded-md px-3 py-1 text-sm"
               >
                 <span>{label}</span>
                 <Button

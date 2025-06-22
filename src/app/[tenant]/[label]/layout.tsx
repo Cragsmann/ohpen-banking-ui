@@ -1,9 +1,8 @@
-import { ReactNode } from "react";
-import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
 import { TenantProvider } from "@/app/providers/TenantProvider";
 import { getTenantConfig } from "@/lib/redis";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ReactNode } from "react";
 
 export default async function LabelLayout({
   children,
@@ -19,8 +18,8 @@ export default async function LabelLayout({
   }
 
   const tenantConfig = await getTenantConfig(tenant);
-  const labelConfig = tenantConfig.labels.find(
-    (l) => l.name.toLowerCase() === label.toLowerCase()
+  const labelConfig = tenantConfig.labels?.find(
+    (l) => l.name.toLowerCase() === label?.toLowerCase()
   );
 
   if (!tenantConfig || !labelConfig) {
@@ -29,21 +28,19 @@ export default async function LabelLayout({
 
   return (
     <TenantProvider tenant={tenantConfig} label={labelConfig}>
-      <header className="bg-white border-b">
+      <header className="border-b">
         <div className="container mx-auto flex items-center justify-between p-4">
-          <h1 className="text-xl font-semibold">
-            {labelConfig.name} — {tenantConfig.subdomain}
-          </h1>
+          <h1 className="text-xl font-semibold">{labelConfig.name}</h1>
           <nav className="space-x-2">
             <Link
-              href={`/dashboard`}
-              className={buttonVariants({ variant: "ghost", size: "sm" })}
+              href={`/`}
+              className="text-sm text-muted-foreground hover:text-foreground"
             >
               Dashboard
             </Link>
             <Link
               href={`/settings`}
-              className={buttonVariants({ variant: "ghost", size: "sm" })}
+              className="text-sm text-muted-foreground hover:text-foreground"
             >
               Settings
             </Link>

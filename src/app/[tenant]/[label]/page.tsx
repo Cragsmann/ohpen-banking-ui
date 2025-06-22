@@ -4,12 +4,12 @@ import { useTenant } from "@/app/providers/TenantProvider";
 export default function DashboardPage() {
   const { tenant, label } = useTenant();
   return (
-    <div>
-      <h1 style={{ color: tenant.theme.primaryColor }}>
-        {tenant.subdomain} Tanant home page
+    <div className="p-4">
+      <h1 className="text-2xl font-bold">
+        Dashboard for tenant: {tenant.subdomain}
       </h1>
       <p>
-        Viewing data for Label: <strong>{label?.name}</strong>
+        Label: <strong>{label?.name}</strong>
       </p>
     </div>
   );
