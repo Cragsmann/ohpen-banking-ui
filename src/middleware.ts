@@ -42,12 +42,18 @@ function extractSubdomains(request: NextRequest): string[] | null {
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const host = request.headers.get("host") || "";
+
   try {
     if (request.method !== "GET" || request.headers.has("x-rewrite-from")) {
       return NextResponse.next();
     }
 
     const parts = extractSubdomains(request);
+    console.log(`[DEBUG] Middleware invoked for: ${request.url}`);
+    console.log(`[DEBUG] Host: ${host}`);
+    console.log(`[DEBUG] Pathname: ${pathname}`);
+    console.log(`[DEBUG] parts: ${parts}`);
 
     if (!parts || parts.length === 0) {
       return NextResponse.next();
@@ -70,7 +76,11 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   } catch (error) {
     console.error("Middleware error:", error);
-    // Let request continue instead of crashing
+
+    console.log(
+      `[DEBUG] No specific middleware rule matched. Passing through.`
+    );
+
     return NextResponse.next();
   }
 }
