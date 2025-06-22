@@ -42,32 +42,37 @@ function extractSubdomains(request: NextRequest): string[] | null {
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  try {
+    if (request.method !== "GET" || request.headers.has("x-rewrite-from")) {
+      return NextResponse.next();
+    }
 
-  if (request.method !== "GET" || request.headers.has("x-rewrite-from")) {
+    const parts = extractSubdomains(request);
+
+    if (!parts || parts.length === 0) {
+      return NextResponse.next();
+    }
+
+    const [tenant, label] = parts;
+
+    if (parts.length === 2) {
+      return NextResponse.rewrite(
+        new URL(`/tenant/${tenant}/${label}${pathname}`, request.url)
+      );
+    }
+
+    if (parts.length === 1) {
+      return NextResponse.rewrite(
+        new URL(`/tenant/${tenant}${pathname}`, request.url)
+      );
+    }
+
+    return NextResponse.next();
+  } catch (error) {
+    console.error("Middleware error:", error);
+    // Let request continue instead of crashing
     return NextResponse.next();
   }
-
-  const parts = extractSubdomains(request);
-
-  if (!parts || parts.length === 0) {
-    return NextResponse.next();
-  }
-
-  const [tenant, label] = parts;
-
-  if (parts.length === 2) {
-    return NextResponse.rewrite(
-      new URL(`/tenant/${tenant}/${label}${pathname}`, request.url)
-    );
-  }
-
-  if (parts.length === 1) {
-    return NextResponse.rewrite(
-      new URL(`/tenant/${tenant}${pathname}`, request.url)
-    );
-  }
-
-  return NextResponse.next();
 }
 
 export const config = {
