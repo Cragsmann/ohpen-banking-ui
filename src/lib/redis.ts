@@ -1,5 +1,5 @@
 import { Redis } from "@upstash/redis";
-import { TenantConfig, LabelConfig } from "./types";
+import { TenantConfig } from "./types";
 import { parseLabelsFromString } from "./utils";
 
 export const redis = new Redis({
