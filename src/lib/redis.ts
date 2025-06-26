@@ -1,5 +1,6 @@
 import { Redis } from "@upstash/redis";
 import { TenantConfig, LabelConfig } from "./types";
+import { parseLabelsFromString } from "./utils";
 
 export const redis = new Redis({
   url: process.env.KV_REST_API_URL!,
@@ -45,20 +46,4 @@ export async function getAllTenants(): Promise<TenantConfig[]> {
       };
     })
   );
-}
-
-function parseLabelsFromString(
-  labelsString?: string | string[]
-): LabelConfig[] {
-  if (!labelsString) {
-    return [];
-  }
-
-  return labelsString[0]
-    .split(",")
-    .filter(Boolean)
-    .map((name, index) => ({
-      id: index + 1,
-      name: name.trim(),
-    }));
 }

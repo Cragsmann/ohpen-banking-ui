@@ -38,7 +38,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         ) {
           setUser(parsedUser);
         } else {
-          localStorage.removeItem("mockUser"); // Clear malformed data
+          localStorage.removeItem("mockUser");
         }
       }
     } catch (error) {

@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { deleteSubdomainAction } from "@/lib/actions";
+import { deleteTenantAction } from "@/lib/actions";
 import { TenantConfig } from "@/lib/types";
 import { generateLabelSubdomainHref } from "@/lib/utils";
 import { Plus, Trash2 } from "lucide-react";
@@ -46,7 +46,7 @@ function TenantGrid({ tenants }: { tenants: TenantConfig[] }) {
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
               <CardTitle className="text-xl">{tenant.subdomain}</CardTitle>
-              <form action={deleteSubdomainAction}>
+              <form action={deleteTenantAction}>
                 <input
                   type="hidden"
                   name="subdomain"

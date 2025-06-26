@@ -27,7 +27,7 @@ export async function createTenantAction(formData: FormData) {
   redirect(`/admin`);
 }
 
-export async function deleteSubdomainAction(formData: FormData): Promise<void> {
+export async function deleteTenantAction(formData: FormData): Promise<void> {
   const subdomain = formData.get("subdomain")?.toString();
 
   if (!subdomain) {
